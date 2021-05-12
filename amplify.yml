@@ -1,0 +1,26 @@
+version: 1
+applications:
+  - appRoot: ./
+    backend:
+      phases:
+        build:
+          commands:
+            - "# Execute Amplify CLI with the helper script"
+            - amplifyPush --simple
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - npm install
+        build:
+          commands:
+            - npx quasar build -m pwa
+          postBuild:
+            - ls
+      artifacts:
+        baseDirectory: dist/pwa
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*
